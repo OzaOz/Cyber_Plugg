@@ -9,7 +9,15 @@ const topics = [
   { id: "malware", title: "Malware Analysis", description: "Static & dynamic analysis, reverse engineering" },
   { id: "pentesting", title: "Penetration Testing", description: "Methodology, tools and reporting" },
   { id: "incident-response", title: "Incident Response", description: "Detection, containment and recovery" },
-  { id: "cissp", title: "CISSP", description: "All 8 domains, risk management, access control and more" },
+  { id: "cissp-mindset", title: "CISSP – Think Like a Manager", description: "Due diligence, due care, planning horizons and exam mindset" },
+  { id: "cissp-domain1", title: "CISSP – Domain 1: Security & Risk Management", description: "CIA Triad, risk analysis, NIST RMF, formulas and threat modelling" },
+  { id: "cissp-domain2", title: "CISSP – Domain 2: Asset Security", description: "Data lifecycle, classification, ownership, destruction and GDPR" },
+  { id: "cissp-domain3", title: "CISSP – Domain 3: Security Architecture & Engineering", description: "Security models, cryptography, zero trust, physical security" },
+  { id: "cissp-domain4", title: "CISSP – Domain 4: Communication & Network Security", description: "OSI model, TCP/UDP, firewalls, IDS/IPS, wireless and VPNs" },
+  { id: "cissp-domain5", title: "CISSP – Domain 5: Identity & Access Management", description: "Authentication factors, access control models, SSO, PAM" },
+  { id: "cissp-domain6", title: "CISSP – Domain 6: Security Assessment & Testing", description: "Vulnerability assessments, pentesting, SAST/DAST, audits" },
+  { id: "cissp-domain7", title: "CISSP – Domain 7: Security Operations", description: "Incident response, SIEM/SOAR, DR sites, chain of custody" },
+  { id: "cissp-domain8", title: "CISSP – Domain 8: Software Development Security", description: "Secure SDLC, SAST/DAST, CI/CD, database attacks, malware" },
 ];
 
 export default function Home() {
