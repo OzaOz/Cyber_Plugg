@@ -113,4 +113,26 @@ export const topics: Topic[] = [
       { question: "What is the goal of the containment phase?", answer: "To limit the spread and impact of the incident without destroying evidence" },
     ],
   },
+  {
+    id: "cissp",
+    title: "CISSP",
+    notes: [
+      "CISSP covers 8 domains (CBK): Security & Risk Management, Asset Security, Security Architecture & Engineering, Communication & Network Security, Identity & Access Management, Security Assessment & Testing, Security Operations, Software Development Security",
+      "The CIA Triad — Confidentiality, Integrity, Availability — is the foundation of all security decisions",
+      "Risk management: Risk = Threat × Vulnerability × Impact; responses are Avoid, Transfer, Mitigate, or Accept",
+      "Access control models: DAC (owner decides), MAC (labels enforced by system), RBAC (roles grant access), ABAC (attributes define access)",
+      "Bell-LaPadula enforces confidentiality ('no read up, no write down'); Biba enforces integrity ('no read down, no write up')",
+      "Business Continuity Planning (BCP) keeps operations running during a disaster; Disaster Recovery Planning (DRP) restores IT systems afterward",
+      "PKI (Public Key Infrastructure) manages digital certificates; a CA (Certificate Authority) signs and validates certificates",
+      "Secure SDLC integrates security into every development phase — requirements, design, coding, testing, and deployment",
+    ],
+    flashcards: [
+      { question: "What are the 8 CISSP CBK domains?", answer: "Security & Risk Management, Asset Security, Security Architecture & Engineering, Communication & Network Security, Identity & Access Management, Security Assessment & Testing, Security Operations, Software Development Security" },
+      { question: "What is the CIA Triad?", answer: "Confidentiality (data accessible only to authorised parties), Integrity (data is accurate and unaltered), Availability (systems are accessible when needed)" },
+      { question: "What does Bell-LaPadula enforce and how?", answer: "Confidentiality — 'no read up' (cannot read data at a higher classification) and 'no write down' (cannot write to a lower classification)" },
+      { question: "What are the four risk response strategies?", answer: "Avoid (eliminate the risk), Transfer (e.g. insurance), Mitigate (reduce likelihood or impact), Accept (acknowledge and tolerate the risk)" },
+      { question: "What is the difference between BCP and DRP?", answer: "BCP ensures business operations continue during a disruption; DRP focuses on recovering IT systems and data after a disaster" },
+      { question: "What is the principle of least privilege?", answer: "Users and systems should be granted only the minimum access rights required to perform their function" },
+    ],
+  },
 ];

@@ -9,6 +9,7 @@ const topics = [
   { id: "malware", title: "Malware Analysis", description: "Static & dynamic analysis, reverse engineering" },
   { id: "pentesting", title: "Penetration Testing", description: "Methodology, tools and reporting" },
   { id: "incident-response", title: "Incident Response", description: "Detection, containment and recovery" },
+  { id: "cissp", title: "CISSP", description: "All 8 domains, risk management, access control and more" },
 ];
 
 export default function Home() {
