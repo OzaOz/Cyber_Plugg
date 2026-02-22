@@ -267,6 +267,116 @@ export default function TopicPage() {
         )}
       </section>
 
+      {/* Flat notes — shown below sections when both exist */}
+      {hasSections && topicData.notes.length > 0 && (
+        <section style={{ marginBottom: "48px" }}>
+          <div style={{
+            backgroundColor: "#6b7c2d",
+            color: "white",
+            padding: "9px 16px",
+            borderRadius: "6px 6px 0 0",
+            fontWeight: "600",
+            fontSize: "0.85rem",
+            letterSpacing: "0.05em",
+            textTransform: "uppercase",
+          }}>
+            Notes
+          </div>
+
+          <div style={{
+            display: "flex",
+            backgroundColor: "#f0f3e6",
+            borderLeft: "1px solid #ddd",
+            borderRight: "1px solid #ddd",
+            borderBottom: "1px solid #ccc",
+          }}>
+            <div style={{
+              width: "230px",
+              minWidth: "230px",
+              padding: "7px 16px",
+              fontSize: "0.75rem",
+              fontWeight: "700",
+              color: "#5a6b22",
+              letterSpacing: "0.04em",
+              textTransform: "uppercase",
+              borderRight: "1px solid #ddd",
+            }}>
+              Concept
+            </div>
+            <div style={{
+              flex: 1,
+              padding: "7px 16px",
+              fontSize: "0.75rem",
+              fontWeight: "700",
+              color: "#5a6b22",
+              letterSpacing: "0.04em",
+              textTransform: "uppercase",
+            }}>
+              Description
+            </div>
+          </div>
+
+          <div style={{
+            border: "1px solid #ddd",
+            borderTop: "none",
+            borderRadius: "0 0 6px 6px",
+            overflow: "hidden",
+          }}>
+            {topicData.notes.map((note, i) => {
+              const parsed = parseNote(note);
+              const rowBg = i % 2 === 0 ? "#ffffff" : "#f8f9f3";
+              return (
+                <div
+                  key={i}
+                  style={{
+                    display: "flex",
+                    backgroundColor: rowBg,
+                    borderTop: i === 0 ? "none" : "1px solid #ebebeb",
+                  }}
+                >
+                  {parsed ? (
+                    <>
+                      <div style={{
+                        width: "230px",
+                        minWidth: "230px",
+                        padding: "10px 16px",
+                        fontWeight: "700",
+                        color: "#3d4f15",
+                        fontSize: "0.85rem",
+                        lineHeight: "1.45",
+                        borderRight: "1px solid #e0e0d8",
+                      }}>
+                        {parsed.term}
+                      </div>
+                      <div style={{
+                        flex: 1,
+                        padding: "10px 16px",
+                        color: "#2a2a2a",
+                        fontSize: "0.875rem",
+                        lineHeight: "1.65",
+                      }}>
+                        {parsed.body}
+                      </div>
+                    </>
+                  ) : (
+                    <div style={{
+                      flex: 1,
+                      padding: "10px 16px",
+                      color: "#2a2a2a",
+                      fontSize: "0.875rem",
+                      lineHeight: "1.65",
+                      fontStyle: "italic",
+                    }}>
+                      {note}
+                    </div>
+                  )}
+                </div>
+              );
+            })}
+          </div>
+        </section>
+      )}
+
       {/* Flashcards */}
       <section>
         <div style={{
