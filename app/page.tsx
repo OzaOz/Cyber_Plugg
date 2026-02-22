@@ -2,6 +2,7 @@
 
 import { useState } from "react";
 import Link from "next/link";
+import { topics } from "@/data/subjects";
 
 const cissTopics = [
   { id: "cissp-mindset", title: "Think Like a Manager", description: "Due diligence, due care, planning horizons and exam mindset" },
@@ -15,10 +16,53 @@ const cissTopics = [
   { id: "cissp-domain8", title: "Domain 8: Software Development Security", description: "Secure SDLC, SAST/DAST, CI/CD, database attacks, malware" },
 ];
 
+const baseFlashcards = cissTopics.flatMap((t) => {
+  const topicData = topics.find((td) => td.id === t.id);
+  return (topicData?.flashcards ?? []).map((fc) => ({
+    question: fc.question,
+    answer: fc.answer,
+    topicTitle: t.title,
+  }));
+});
+
+function shuffleArray<T>(arr: T[]): T[] {
+  const a = [...arr];
+  for (let i = a.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [a[i], a[j]] = [a[j], a[i]];
+  }
+  return a;
+}
+
 export default function Home() {
   const [tab, setTab] = useState<"reading" | "quiz">("reading");
+
+  // Reading tab state
   const [cissOpen, setCissOpen] = useState(false);
   const [hoveredId, setHoveredId] = useState<string | null>(null);
+
+  // Quiz tab state
+  const [cards, setCards] = useState(baseFlashcards);
+  const [quizIdx, setQuizIdx] = useState(0);
+  const [quizFlipped, setQuizFlipped] = useState(false);
+
+  const card = cards[quizIdx];
+
+  function handleShuffle() {
+    setCards(shuffleArray(baseFlashcards));
+    setQuizIdx(0);
+    setQuizFlipped(false);
+  }
+
+  function handlePrev() {
+    setQuizIdx((i) => Math.max(i - 1, 0));
+    setQuizFlipped(false);
+  }
+
+  function handleNext() {
+    setQuizIdx((i) => Math.min(i + 1, cards.length - 1));
+    setQuizFlipped(false);
+  }
 
   return (
     <main style={{ maxWidth: "900px", margin: "0 auto", padding: "60px 20px" }}>
@@ -57,139 +101,275 @@ export default function Home() {
       </div>
 
       {tab === "quiz" ? (
+        /* ── Quiz tile ── */
         <div style={{
           backgroundColor: "#ffffff",
           border: "1px solid #ddd",
           borderRadius: "12px",
-          padding: "48px 32px",
-          textAlign: "center",
-          color: "#aaa",
+          overflow: "hidden",
         }}>
-          <p style={{ fontSize: "1rem", fontWeight: "600", color: "#6b7c2d", marginBottom: "8px" }}>
-            Quizzes coming soon
-          </p>
-          <p style={{ fontSize: "0.85rem" }}>
-            Quiz mode will let you test your knowledge across all 8 CISSP domains.
-          </p>
+          {/* Header */}
+          <div style={{
+            backgroundColor: "#6b7c2d",
+            color: "white",
+            padding: "12px 20px",
+            display: "flex",
+            justifyContent: "space-between",
+            alignItems: "center",
+          }}>
+            <div>
+              <span style={{ fontWeight: "600", fontSize: "0.9rem", letterSpacing: "0.04em", textTransform: "uppercase" }}>
+                CISSP Flashcards — All Domains
+              </span>
+              <span style={{ marginLeft: "12px", opacity: 0.8, fontSize: "0.8rem" }}>
+                {quizIdx + 1} / {cards.length}
+              </span>
+            </div>
+            <button
+              onClick={handleShuffle}
+              style={{
+                background: "rgba(255,255,255,0.15)",
+                border: "1px solid rgba(255,255,255,0.35)",
+                borderRadius: "5px",
+                color: "white",
+                padding: "5px 12px",
+                fontSize: "0.78rem",
+                fontWeight: "600",
+                cursor: "pointer",
+                letterSpacing: "0.03em",
+              }}
+            >
+              Shuffle
+            </button>
+          </div>
+
+          {/* Domain label */}
+          <div style={{
+            padding: "7px 20px",
+            backgroundColor: "#f0f3e6",
+            borderBottom: "1px solid #e0e0d8",
+            fontSize: "0.72rem",
+            fontWeight: "700",
+            color: "#5a6b22",
+            letterSpacing: "0.08em",
+            textTransform: "uppercase",
+          }}>
+            {card.topicTitle}
+          </div>
+
+          {/* Card face */}
+          <div
+            onClick={() => setQuizFlipped((f) => !f)}
+            style={{
+              padding: "44px 40px",
+              minHeight: "160px",
+              display: "flex",
+              flexDirection: "column",
+              justifyContent: "center",
+              alignItems: "center",
+              textAlign: "center",
+              cursor: "pointer",
+              backgroundColor: "#ffffff",
+              transition: "background-color 0.15s",
+            }}
+            onMouseEnter={(e) => (e.currentTarget.style.backgroundColor = "#f8f9f3")}
+            onMouseLeave={(e) => (e.currentTarget.style.backgroundColor = "#ffffff")}
+          >
+            {quizFlipped ? (
+              <>
+                <p style={{
+                  fontSize: "0.7rem",
+                  color: "#6b7c2d",
+                  marginBottom: "14px",
+                  textTransform: "uppercase",
+                  letterSpacing: "0.08em",
+                  fontWeight: "700",
+                }}>
+                  Answer
+                </p>
+                <p style={{ fontSize: "0.95rem", color: "#1a1a1a", lineHeight: "1.65", maxWidth: "680px" }}>
+                  {card.answer}
+                </p>
+              </>
+            ) : (
+              <>
+                <p style={{
+                  fontSize: "0.7rem",
+                  color: "#aaa",
+                  marginBottom: "14px",
+                  textTransform: "uppercase",
+                  letterSpacing: "0.08em",
+                  fontWeight: "700",
+                }}>
+                  Question — click to reveal
+                </p>
+                <p style={{ fontSize: "0.95rem", color: "#1a1a1a", lineHeight: "1.65", maxWidth: "680px" }}>
+                  {card.question}
+                </p>
+              </>
+            )}
+          </div>
+
+          {/* Navigation */}
+          <div style={{
+            display: "flex",
+            borderTop: "1px solid #e0e0d8",
+            backgroundColor: "#f8f9f3",
+          }}>
+            <button
+              onClick={handlePrev}
+              disabled={quizIdx === 0}
+              style={{
+                flex: 1,
+                padding: "12px",
+                border: "none",
+                borderRight: "1px solid #e0e0d8",
+                backgroundColor: "transparent",
+                cursor: quizIdx === 0 ? "not-allowed" : "pointer",
+                color: quizIdx === 0 ? "#ccc" : "#6b7c2d",
+                fontSize: "0.88rem",
+                fontWeight: "600",
+              }}
+            >
+              ← Previous
+            </button>
+            <button
+              onClick={handleNext}
+              disabled={quizIdx === cards.length - 1}
+              style={{
+                flex: 1,
+                padding: "12px",
+                border: "none",
+                backgroundColor: "transparent",
+                cursor: quizIdx === cards.length - 1 ? "not-allowed" : "pointer",
+                color: quizIdx === cards.length - 1 ? "#ccc" : "#6b7c2d",
+                fontSize: "0.88rem",
+                fontWeight: "600",
+              }}
+            >
+              Next →
+            </button>
+          </div>
         </div>
       ) : (
-      <div
-        style={{
-          backgroundColor: "#ffffff",
-          border: `1px solid ${cissOpen || hoveredId === "cissp-group" ? "#6b7c2d" : "#ddd"}`,
-          borderRadius: "12px",
-          padding: "24px",
-          cursor: "pointer",
-          transition: "border-color 0.2s",
-        }}
-        onMouseEnter={() => setHoveredId("cissp-group")}
-        onMouseLeave={() => setHoveredId(null)}
-        onClick={() => setCissOpen(!cissOpen)}
-      >
-        {/* Header row */}
-        <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center" }}>
-          <div>
-            <h2 style={{ fontSize: "1.1rem", fontWeight: "600", marginBottom: "4px", color: "#6b7c2d" }}>
-              CISSP Exam Preparation
-            </h2>
-            <p style={{ fontSize: "0.85rem", color: "#777" }}>
-              {cissOpen
-                ? "8 domains + exam mindset"
-                : "8 domains + exam mindset — click to expand"}
-            </p>
-          </div>
-          <span style={{
-            fontSize: "1.1rem",
-            color: "#6b7c2d",
-            display: "inline-block",
-            transition: "transform 0.2s",
-            transform: cissOpen ? "rotate(180deg)" : "rotate(0deg)",
-            marginLeft: "16px",
-            flexShrink: 0,
-          }}>
-            ▾
-          </span>
-        </div>
-
-        {/* Expanded inner grid */}
-        {cissOpen && (
-          <div
-            style={{
-              display: "grid",
-              gridTemplateColumns: "repeat(auto-fill, minmax(220px, 1fr))",
-              gap: "14px",
-              marginTop: "20px",
-              paddingTop: "20px",
-              borderTop: "1px solid #ebebeb",
-            }}
-            onClick={(e) => e.stopPropagation()}
-          >
-            {cissTopics.map((topic) => (
-              <Link key={topic.id} href={`/topics/${topic.id}`} style={{ textDecoration: "none" }}>
-                <div
-                  style={{
-                    backgroundColor: "#f8f9f3",
-                    border: `1px solid ${hoveredId === topic.id ? "#6b7c2d" : "#e0e0d8"}`,
-                    borderRadius: "10px",
-                    padding: "16px 18px",
-                    cursor: "pointer",
-                    transition: "border-color 0.2s",
-                    height: "100%",
-                  }}
-                  onMouseEnter={() => setHoveredId(topic.id)}
-                  onMouseLeave={() => setHoveredId(null)}
-                >
-                  <h3 style={{ fontSize: "0.95rem", fontWeight: "600", marginBottom: "6px", color: "#6b7c2d" }}>
-                    {topic.title}
-                  </h3>
-                  <p style={{ fontSize: "0.8rem", color: "#777" }}>
-                    {topic.description}
-                  </p>
-                </div>
-              </Link>
-            ))}
-          </div>
-        )}
-
-        {/* Sources */}
+        /* ── Reading Material tile ── */
         <div
-          onClick={(e) => e.stopPropagation()}
           style={{
-            marginTop: "20px",
-            paddingTop: "14px",
-            borderTop: "1px solid #ebebeb",
-            display: "flex",
-            alignItems: "center",
-            gap: "6px",
-            flexWrap: "wrap",
-            fontSize: "0.78rem",
-            color: "#aaa",
+            backgroundColor: "#ffffff",
+            border: `1px solid ${cissOpen || hoveredId === "cissp-group" ? "#6b7c2d" : "#ddd"}`,
+            borderRadius: "12px",
+            padding: "24px",
+            cursor: "pointer",
+            transition: "border-color 0.2s",
           }}
+          onMouseEnter={() => setHoveredId("cissp-group")}
+          onMouseLeave={() => setHoveredId(null)}
+          onClick={() => setCissOpen(!cissOpen)}
         >
-          <span>Sources:</span>
-          <a
-            href="https://github.com/jefferywmoore/CISSP-Study-Resources/tree/main"
-            target="_blank"
-            rel="noopener noreferrer"
-            style={{ color: "#6b7c2d", textDecoration: "none" }}
-            onMouseEnter={(e) => (e.currentTarget.style.textDecoration = "underline")}
-            onMouseLeave={(e) => (e.currentTarget.style.textDecoration = "none")}
+          {/* Header row */}
+          <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center" }}>
+            <div>
+              <h2 style={{ fontSize: "1.1rem", fontWeight: "600", marginBottom: "4px", color: "#6b7c2d" }}>
+                CISSP Exam Preparation
+              </h2>
+              <p style={{ fontSize: "0.85rem", color: "#777" }}>
+                {cissOpen
+                  ? "8 domains + exam mindset"
+                  : "8 domains + exam mindset — click to expand"}
+              </p>
+            </div>
+            <span style={{
+              fontSize: "1.1rem",
+              color: "#6b7c2d",
+              display: "inline-block",
+              transition: "transform 0.2s",
+              transform: cissOpen ? "rotate(180deg)" : "rotate(0deg)",
+              marginLeft: "16px",
+              flexShrink: 0,
+            }}>
+              ▾
+            </span>
+          </div>
+
+          {/* Expanded inner grid */}
+          {cissOpen && (
+            <div
+              style={{
+                display: "grid",
+                gridTemplateColumns: "repeat(auto-fill, minmax(220px, 1fr))",
+                gap: "14px",
+                marginTop: "20px",
+                paddingTop: "20px",
+                borderTop: "1px solid #ebebeb",
+              }}
+              onClick={(e) => e.stopPropagation()}
+            >
+              {cissTopics.map((topic) => (
+                <Link key={topic.id} href={`/topics/${topic.id}`} style={{ textDecoration: "none" }}>
+                  <div
+                    style={{
+                      backgroundColor: "#f8f9f3",
+                      border: `1px solid ${hoveredId === topic.id ? "#6b7c2d" : "#e0e0d8"}`,
+                      borderRadius: "10px",
+                      padding: "16px 18px",
+                      cursor: "pointer",
+                      transition: "border-color 0.2s",
+                      height: "100%",
+                    }}
+                    onMouseEnter={() => setHoveredId(topic.id)}
+                    onMouseLeave={() => setHoveredId(null)}
+                  >
+                    <h3 style={{ fontSize: "0.95rem", fontWeight: "600", marginBottom: "6px", color: "#6b7c2d" }}>
+                      {topic.title}
+                    </h3>
+                    <p style={{ fontSize: "0.8rem", color: "#777" }}>
+                      {topic.description}
+                    </p>
+                  </div>
+                </Link>
+              ))}
+            </div>
+          )}
+
+          {/* Sources */}
+          <div
+            onClick={(e) => e.stopPropagation()}
+            style={{
+              marginTop: "20px",
+              paddingTop: "14px",
+              borderTop: "1px solid #ebebeb",
+              display: "flex",
+              alignItems: "center",
+              gap: "6px",
+              flexWrap: "wrap",
+              fontSize: "0.78rem",
+              color: "#aaa",
+            }}
           >
-            jefferywmoore/CISSP-Study-Resources
-          </a>
-          <span style={{ color: "#ddd" }}>·</span>
-          <a
-            href="https://www.youtube.com/watch?v=_nyZhYnCNLA&t=2s"
-            target="_blank"
-            rel="noopener noreferrer"
-            style={{ color: "#6b7c2d", textDecoration: "none" }}
-            onMouseEnter={(e) => (e.currentTarget.style.textDecoration = "underline")}
-            onMouseLeave={(e) => (e.currentTarget.style.textDecoration = "none")}
-          >
-            Pete Zerger — CISSP Course (YouTube)
-          </a>
+            <span>Sources:</span>
+            <a
+              href="https://github.com/jefferywmoore/CISSP-Study-Resources/tree/main"
+              target="_blank"
+              rel="noopener noreferrer"
+              style={{ color: "#6b7c2d", textDecoration: "none" }}
+              onMouseEnter={(e) => (e.currentTarget.style.textDecoration = "underline")}
+              onMouseLeave={(e) => (e.currentTarget.style.textDecoration = "none")}
+            >
+              jefferywmoore/CISSP-Study-Resources
+            </a>
+            <span style={{ color: "#ddd" }}>·</span>
+            <a
+              href="https://www.youtube.com/watch?v=_nyZhYnCNLA&t=2s"
+              target="_blank"
+              rel="noopener noreferrer"
+              style={{ color: "#6b7c2d", textDecoration: "none" }}
+              onMouseEnter={(e) => (e.currentTarget.style.textDecoration = "underline")}
+              onMouseLeave={(e) => (e.currentTarget.style.textDecoration = "none")}
+            >
+              Pete Zerger — CISSP Course (YouTube)
+            </a>
+          </div>
         </div>
-      </div>
       )}
     </main>
   );
