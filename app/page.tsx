@@ -105,6 +105,45 @@ export default function Home() {
             ))}
           </div>
         )}
+
+        {/* Sources */}
+        <div
+          onClick={(e) => e.stopPropagation()}
+          style={{
+            marginTop: "20px",
+            paddingTop: "14px",
+            borderTop: "1px solid #ebebeb",
+            display: "flex",
+            alignItems: "center",
+            gap: "6px",
+            flexWrap: "wrap",
+            fontSize: "0.78rem",
+            color: "#aaa",
+          }}
+        >
+          <span>Sources:</span>
+          <a
+            href="https://github.com/jefferywmoore/CISSP-Study-Resources/tree/main"
+            target="_blank"
+            rel="noopener noreferrer"
+            style={{ color: "#6b7c2d", textDecoration: "none" }}
+            onMouseEnter={(e) => (e.currentTarget.style.textDecoration = "underline")}
+            onMouseLeave={(e) => (e.currentTarget.style.textDecoration = "none")}
+          >
+            jefferywmoore/CISSP-Study-Resources
+          </a>
+          <span style={{ color: "#ddd" }}>·</span>
+          <a
+            href="https://www.youtube.com/watch?v=_nyZhYnCNLA&t=2s"
+            target="_blank"
+            rel="noopener noreferrer"
+            style={{ color: "#6b7c2d", textDecoration: "none" }}
+            onMouseEnter={(e) => (e.currentTarget.style.textDecoration = "underline")}
+            onMouseLeave={(e) => (e.currentTarget.style.textDecoration = "none")}
+          >
+            Pete Zerger — CISSP Course (YouTube)
+          </a>
+        </div>
       </div>
     </main>
   );
