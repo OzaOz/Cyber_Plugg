@@ -97,72 +97,71 @@ export default function TopicPage() {
           /* ── Rich sectioned table layout — each section is its own card ── */
           <div style={{ display: "flex", flexDirection: "column", gap: "12px", borderTop: "none" }}>
             {topicData.sections!.map((section, sIdx) => (
-              <div
-                key={sIdx}
-                style={{
-                  border: "1px solid #ddd",
-                  borderRadius: "6px",
-                  overflow: "hidden",
-                }}
-              >
-                {/* Section label */}
+              <div key={sIdx}>
+                {/* Section heading — above the table, no box */}
                 <div style={{
-                  padding: "8px 16px",
-                  backgroundColor: "#f0f3e6",
-                  fontSize: "0.71rem",
+                  fontSize: "0.8rem",
                   fontWeight: "700",
                   letterSpacing: "0.1em",
                   textTransform: "uppercase",
                   color: "#5a6b22",
-                  borderBottom: "1px solid #ccc",
+                  marginBottom: "8px",
+                  paddingLeft: "2px",
                 }}>
                   {section.heading}
                 </div>
 
-                {/* Column headers */}
+                {/* Table card */}
                 <div style={{
-                  display: "grid",
-                  gridTemplateColumns: `repeat(${section.columns.length}, 1fr)`,
-                  backgroundColor: "#fafbf6",
-                  borderBottom: "1px solid #e0e0d8",
+                  border: "1px solid #ddd",
+                  borderRadius: "6px",
+                  overflow: "hidden",
                 }}>
-                  {section.columns.map((col, cIdx) => (
-                    <div key={cIdx} style={{
-                      padding: "6px 14px",
-                      fontSize: "0.72rem",
-                      fontWeight: "700",
-                      color: "#6b7c2d",
-                      letterSpacing: "0.06em",
-                      textTransform: "uppercase",
-                      borderRight: cIdx < section.columns.length - 1 ? "1px solid #e0e0d8" : "none",
-                    }}>
-                      {col}
-                    </div>
-                  ))}
-                </div>
-
-                {/* Data rows */}
-                {section.rows.map((row, rIdx) => (
-                  <div key={rIdx} style={{
+                  {/* Column headers */}
+                  <div style={{
                     display: "grid",
                     gridTemplateColumns: `repeat(${section.columns.length}, 1fr)`,
-                    backgroundColor: rIdx % 2 === 0 ? "#ffffff" : "#f8f9f3",
-                    borderTop: "1px solid #ebebeb",
+                    backgroundColor: "#fafbf6",
+                    borderBottom: "1px solid #e0e0d8",
                   }}>
-                    {row.map((cell, cIdx) => (
+                    {section.columns.map((col, cIdx) => (
                       <div key={cIdx} style={{
-                        padding: "9px 14px",
-                        fontSize: "0.85rem",
-                        color: cIdx === 0 ? "#3d4f15" : "#2a2a2a",
-                        fontWeight: cIdx === 0 ? "600" : "400",
-                        lineHeight: "1.55",
-                        borderRight: cIdx < row.length - 1 ? "1px solid #ebebeb" : "none",
+                        padding: "6px 14px",
+                        fontSize: "0.72rem",
+                        fontWeight: "700",
+                        color: "#6b7c2d",
+                        letterSpacing: "0.06em",
+                        textTransform: "uppercase",
+                        borderRight: cIdx < section.columns.length - 1 ? "1px solid #e0e0d8" : "none",
                       }}>
-                        {renderCell(cell)}
+                        {col}
                       </div>
                     ))}
                   </div>
-                ))}
+
+                  {/* Data rows */}
+                  {section.rows.map((row, rIdx) => (
+                    <div key={rIdx} style={{
+                      display: "grid",
+                      gridTemplateColumns: `repeat(${section.columns.length}, 1fr)`,
+                      backgroundColor: rIdx % 2 === 0 ? "#ffffff" : "#f8f9f3",
+                      borderTop: "1px solid #ebebeb",
+                    }}>
+                      {row.map((cell, cIdx) => (
+                        <div key={cIdx} style={{
+                          padding: "9px 14px",
+                          fontSize: "0.85rem",
+                          color: cIdx === 0 ? "#3d4f15" : "#2a2a2a",
+                          fontWeight: cIdx === 0 ? "600" : "400",
+                          lineHeight: "1.55",
+                          borderRight: cIdx < row.length - 1 ? "1px solid #ebebeb" : "none",
+                        }}>
+                          {renderCell(cell)}
+                        </div>
+                      ))}
+                    </div>
+                  ))}
+                </div>
               </div>
             ))}
           </div>
