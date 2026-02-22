@@ -3,11 +3,18 @@ export type Flashcard = {
   answer: string;
 };
 
+export type Section = {
+  heading: string;
+  columns: string[];
+  rows: string[][];
+};
+
 export type Topic = {
   id: string;
   title: string;
   notes: string[];
   flashcards: Flashcard[];
+  sections?: Section[];
 };
 
 export const topics: Topic[] = [
@@ -200,6 +207,286 @@ export const topics: Topic[] = [
       "Employment lifecycle and legal agreements: Onboarding = NDA (Non-Disclosure Agreement — protects trade secrets and confidential information; survives employment), Non-compete agreement (limits competitive employment post-termination), AUP (Acceptable Use Policy — defines permitted use of organisational assets), background checks and reference verification before access is granted; Transfer = re-evaluate access rights to prevent privilege accumulation, update clearance; Offboarding = immediate account and access revocation, device return, exit interview, NDA reminder, and escort from premises; Mandatory vacations = forces duty coverage, exposing fraud; Job rotation = cross-trains and detects irregularities",
       "Security awareness programme design: Three tiers: Awareness (all employees — recognise and report threats; non-technical), Training (role-specific skills — hands-on for IT/security staff), Education (conceptual understanding for architects and managers); Security champions = designated employees who act as security advocates within their team — amplify security culture without central team having to cover all groups; Gamification = points, leaderboards, badges, and challenges to increase engagement and retention; Phishing simulation metrics: click rate (susceptibility), credential submission rate (severity), report rate (detection capability) — used to measure and target awareness training investment",
       "Intellectual property extensions: Patent types: Utility patent (new, useful processes, machines, or compositions of matter — 20-year protection), Design patent (ornamental appearance of a functional item — 15 years), Software patent (algorithms, methods, and processes implemented in software — jurisdiction-dependent); Economic Espionage Act (EEA) 1996 = US federal law criminalising theft of trade secrets by foreign governments or for commercial advantage — penalties include up to 15 years imprisonment; TRIPS (Agreement on Trade-Related Aspects of Intellectual Property Rights) = WTO international IP enforcement standard that member states must implement",
+    ],
+    sections: [
+      {
+        heading: "Core Security Concepts",
+        columns: ["Concept", "Definition"],
+        rows: [
+          ["CIA Triad", "Confidentiality (only authorised subjects access objects) + Integrity (data cannot be modified without authorisation) + Availability (authorised requests served within a reasonable time)"],
+          ["Authenticity", "4th pillar — verifies content or identity is genuine and not forged; achieved via digital signatures, certificates, and hashing"],
+          ["Non-repudiation", "5th pillar — actor cannot deny having performed an action; achieved via digital signatures, audit logs, and timestamps; provides accountability"],
+          ["Identification", "Claiming an identity — username, smart card, employee ID"],
+          ["Authentication", "Proving the claimed identity — password, biometric, hardware token"],
+          ["Authorisation", "Defining what the authenticated entity is permitted to do after authentication"],
+          ["Auditing", "Recording all actions taken by authenticated subjects — creates the audit trail"],
+          ["Accountability", "Holding subjects responsible for their actions via audit trails and logs — requires auditing"],
+        ],
+      },
+      {
+        heading: "Security Policy Hierarchy",
+        columns: ["Level", "Purpose", "Mandatory"],
+        rows: [
+          ["Acceptable Use Policy (AUP)", "Assigns roles and responsibilities for the use of organisational assets", "Yes"],
+          ["Baseline", "Minimum security configuration that every system in the organisation must meet", "Yes"],
+          ["Guidelines", "Recommendations and best practices for implementing baselines and standards", "No"],
+          ["Procedures", "Step-by-step instructions for carrying out policies and implementing standards", "Yes"],
+        ],
+      },
+      {
+        heading: "Risk Categories & Risk Factors",
+        columns: ["Category / Factor", "Description"],
+        rows: [
+          ["Damage", "Physical loss or inaccessibility of an asset"],
+          ["Disclosure", "Critical information exposed — maliciously or accidentally"],
+          ["Losses", "Permanent or temporary loss — e.g. altered data (integrity) or ransomware (availability)"],
+          ["Physical damage", "Disasters, power loss, vandalism — factors that increase risk"],
+          ["Malfunctions", "System, network, hardware, or HVAC failures"],
+          ["Attacks", "Purposeful threat actor actions against assets"],
+          ["Human errors", "Accidental misuse or mistakes by personnel"],
+          ["Application errors", "Software or operating system failures"],
+        ],
+      },
+      {
+        heading: "Risk Responses",
+        columns: ["Response", "Description", "Example"],
+        rows: [
+          ["Acceptance", "Do nothing; accept the risk as-is", "Low-impact risk below the tolerance threshold"],
+          ["Mitigation / Reduction", "Implement controls; accept the remaining residual risk", "Deploy firewall, apply patches, require MFA"],
+          ["Assignment / Transference", "Transfer the financial impact to another party", "Purchase cyber insurance, outsource to MSSP"],
+          ["Avoidance", "Eliminate the risky activity entirely", "Discontinue a high-risk product or service"],
+          ["Deterrence", "Visible countermeasures that discourage threat actors", "Security audits, CCTV, warning signage"],
+          ["Rejection", "Ignore the risk — NEVER a valid management response", "(invalid — management must formally address all identified risks)"],
+        ],
+      },
+      {
+        heading: "Risk Types & Appetite",
+        columns: ["Term", "Definition"],
+        rows: [
+          ["Total risk", "Risk present with no safeguards = Threats × Vulnerabilities × Asset Value"],
+          ["Inherent risk", "Risk before any controls are applied"],
+          ["Residual risk", "Risk remaining after controls = Total Risk − Controls Gap"],
+          ["Risk appetite", "Amount of risk the organisation willingly accepts in pursuit of its goals — set by board/senior management"],
+          ["Risk tolerance", "Acceptable variation around the risk appetite target"],
+          ["Risk capacity", "Maximum risk the organisation can absorb before its existence is threatened"],
+        ],
+      },
+      {
+        heading: "Quantitative Risk Formulas",
+        columns: ["Formula", "Expression", "Notes"],
+        rows: [
+          ["Exposure Factor (EF)", "% of asset value lost per single event", "Range: 0–100%; e.g. 0.4 = 40% loss"],
+          ["Single Loss Expectancy (SLE)", "Asset Value × EF", "Dollar value lost in one incident"],
+          ["Annualised Rate of Occurrence (ARO)", "Expected frequency of the threat per year", "e.g. 0.5 = once every 2 years"],
+          ["Annualised Loss Expectancy (ALE)", "SLE × ARO", "Expected annual dollar loss from this threat"],
+          ["Safeguard value", "ALE(before) − ALE(after) − Annual cost of safeguard", "Positive = safeguard is cost-effective"],
+          ["Total Risk", "Threats × Vulnerabilities × Asset Value", "Baseline with zero controls applied"],
+          ["Residual Risk", "Total Risk − Controls Gap", "Risk remaining after controls are implemented"],
+        ],
+      },
+      {
+        heading: "Risk Analysis Methods",
+        columns: ["Method", "Type", "Approach", "Output"],
+        rows: [
+          ["Quantitative", "Objective", "Dollar values, formulas, historical data", "Specific financial figures — SLE, ALE"],
+          ["Qualitative", "Subjective", "Scoring/ranking (low/medium/high); Delphi technique for anonymous group consensus", "Priority ranking"],
+          ["FAIR", "Quantitative+", "Loss Event Frequency × Loss Magnitude; Monte Carlo simulation", "Probability distribution of potential losses"],
+        ],
+      },
+      {
+        heading: "Threat Modelling Frameworks",
+        columns: ["Framework", "Developer", "Focus"],
+        rows: [
+          ["STRIDE", "Microsoft", "Attack categories: Spoofing, Tampering, Repudiation, Information Disclosure, Denial of Service, Elevation of Privilege"],
+          ["DREAD", "Microsoft", "Threat rating: Damage, Reproducibility, Exploitability, Affected users, Discoverability — used to prioritise STRIDE findings"],
+          ["PASTA", "—", "Seven-stage, asset-value-focused; develops countermeasures based on assessed asset value"],
+          ["VAST", "—", "Visual, Agile, and Simple Threat modelling; integrates into agile development pipelines"],
+          ["TRIKE", "Open-source", "Risk-based; ensures identified risks reach stakeholder-acceptable levels"],
+          ["MITRE ATT&CK", "MITRE", "Real-world adversary tactics (why) and techniques (how); used for threat hunting and detection gap analysis"],
+          ["CAPEC", "MITRE", "Catalogue of software-level attack patterns; complements ATT&CK at the application layer"],
+          ["COBIT", "ISACA", "IT governance framework; five principles including separating governance from management"],
+        ],
+      },
+      {
+        heading: "Security Control Categories",
+        columns: ["Category", "Mechanism", "Examples"],
+        rows: [
+          ["Technical / Logical", "Hardware and software controls", "Firewalls, IDS/IPS, encryption, ACLs, HVAC, fire detection/suppression"],
+          ["Administrative", "Policies and procedural controls", "Background checks, data classification, AUP, security awareness training"],
+          ["Physical", "Tangible physical measures", "Guards, fences, motion detectors, locks, lights, CCTV, bollards, mantraps"],
+        ],
+      },
+      {
+        heading: "Security Control Types",
+        columns: ["Type", "Function", "Examples"],
+        rows: [
+          ["Deterrent", "Discourages violation of security policy", "Audit policies, awareness training, security badges, warning signs"],
+          ["Preventative", "Stops unwanted events from occurring", "Firewalls, gates, mantraps, MFA, access controls"],
+          ["Detective", "Discovers security events after they occur", "CCTV, IDS, audit trails, honeypots, mandatory vacation, job rotation"],
+          ["Corrective", "Restores systems to a secure state after a breach", "Antivirus remediation, patch deployment, backup restoration"],
+          ["Compensating", "Alternative when the primary control is unavailable", "Manual approval process when the automated system is down"],
+          ["Recovery", "Restores business operations after a major disruption", "Server clustering, VM shadowing, hot/warm/cold sites"],
+          ["Directive", "Confines or guides the actions of subjects", "Security policies, posted notifications, exit signs, SOPs"],
+        ],
+      },
+      {
+        heading: "NIST SP 800-37 RMF — 7 Steps",
+        columns: ["Step", "Name", "Action"],
+        rows: [
+          ["1", "Prepare", "Establish context, roles, risk strategy, and organisational priorities"],
+          ["2", "Categorise", "Classify the system using FIPS 199 impact levels — Low, Moderate, or High"],
+          ["3", "Select", "Choose appropriate baseline controls from NIST SP 800-53"],
+          ["4", "Implement", "Deploy and configure the selected controls"],
+          ["5", "Assess", "Verify controls are implemented correctly and operating as intended"],
+          ["6", "Authorise", "Management formally accepts residual risk and issues an Authority to Operate (ATO)"],
+          ["7", "Monitor", "Continuously evaluate control effectiveness and report to the authorising official"],
+        ],
+      },
+      {
+        heading: "Governance & Compliance Frameworks",
+        columns: ["Framework", "Origin", "Purpose / Scope"],
+        rows: [
+          ["ISO/IEC 27001", "ISO", "ISMS requirements — the only certifiable standard in the 27000 series; uses Annex A controls"],
+          ["ISO/IEC 27002", "ISO", "Implementation guidance for 27001 Annex A controls — not certifiable on its own"],
+          ["NIST CSF 2.0", "NIST", "Risk-based voluntary framework; 6 functions: Govern (added 2024), Identify, Protect, Detect, Respond, Recover"],
+          ["NIST SP 800-53", "NIST", "Comprehensive security and privacy control catalogue for US federal agencies"],
+          ["COBIT", "ISACA", "IT governance framework aligning IT investments and activities to business goals"],
+          ["SABSA", "—", "Business-risk-driven architecture framework; 6 layers from business context to operations"],
+          ["CIS Controls", "CIS", "18 prioritised actionable controls targeting the highest-impact defences"],
+          ["PCI-DSS", "PCI SSC", "12 requirements for organisations that store, process, or transmit cardholder data"],
+          ["SOX", "US Congress", "IT general controls ensuring financial record integrity; applies to US public companies"],
+          ["FedRAMP", "US GSA", "Standardised cloud security authorisation for US federal agencies; Low/Moderate/High impact levels"],
+        ],
+      },
+      {
+        heading: "Key US Privacy & Security Laws",
+        columns: ["Law / Act", "Scope"],
+        rows: [
+          ["CFAA (1986)", "First US cybercrime law — criminalises unauthorised access to computer systems and data"],
+          ["FISMA", "Requires US federal agencies to develop, document, and implement information security programmes"],
+          ["HIPAA", "Protects privacy and security of individually identifiable health information (PHI)"],
+          ["HITECH", "Strengthens HIPAA enforcement and extends breach notification requirements for health IT"],
+          ["Gramm-Leach-Bliley", "Requires financial institutions to protect customer financial data"],
+          ["COPPA", "Restricts collection of personal data online from children under 13"],
+          ["ECPA", "Regulates interception of electronic communications — email, phone, data in transit"],
+          ["CALEA", "Requires communications infrastructure to support lawful law enforcement interception"],
+          ["Fourth Amendment", "Protects US citizens from unreasonable government searches and seizures — foundation of US privacy law"],
+          ["CLOUD Act (2018)", "Allows US law enforcement to compel US companies to produce data regardless of where it is stored — conflicts with GDPR"],
+          ["ITAR / EAR", "ITAR (State Dept) controls crypto products as defence munitions; EAR (Commerce Dept) controls dual-use crypto on the CCL; both require export licences"],
+        ],
+      },
+      {
+        heading: "GDPR Key Elements",
+        columns: ["Element", "Detail"],
+        rows: [
+          ["Scope", "Applies to any organisation with EU customers regardless of where the organisation is located"],
+          ["Data Controller", "Decides the purpose and means of processing personal data"],
+          ["Data Processor", "Processes personal data on behalf of the controller"],
+          ["Breach notification", "Must notify the supervisory authority within 72 hours of discovering a breach"],
+          ["Maximum fine", "4% of annual global revenue or €20M — whichever is higher"],
+          ["Transfer restriction", "Restricts personal data transfers outside the EU without adequate safeguards"],
+          ["Risk reduction tools", "Pseudonymisation and anonymisation both reduce the GDPR compliance burden"],
+        ],
+      },
+      {
+        heading: "OECD Privacy Principles (Fair Information Practices)",
+        columns: ["Principle", "Requirement"],
+        rows: [
+          ["Collection Limitation", "Collect only the minimum data necessary for the stated purpose"],
+          ["Data Quality", "Data must be accurate, complete, and kept current"],
+          ["Purpose Specification", "State the purpose of data collection before or at the time of collection"],
+          ["Use Limitation", "Data may only be used for the originally stated purpose"],
+          ["Security Safeguards", "Protect personal data with appropriate technical and organisational controls"],
+          ["Openness / Transparency", "Inform individuals about data collection practices and purposes"],
+          ["Individual Participation", "Allow individuals to access, review, and correct their personal data"],
+          ["Accountability", "The data controller is responsible for compliance with all privacy principles"],
+        ],
+      },
+      {
+        heading: "Personnel Security Controls",
+        columns: ["Phase", "Controls"],
+        rows: [
+          ["Pre-employment", "Background checks, reference verification, drug testing, criminal history review, NDA signing before access is granted"],
+          ["During employment", "Security awareness training, NDA enforcement, least privilege, job rotation (detects fraud), mandatory vacation (forces duty coverage, exposes irregularities)"],
+          ["Separation / Offboarding", "Immediate account and access revocation, device and asset return, exit interview, NDA reminder, update all authorised user lists, escort from premises"],
+        ],
+      },
+      {
+        heading: "Business Continuity Key Terms",
+        columns: ["Term", "Definition", "Relationship"],
+        rows: [
+          ["BCP", "Plan to continue essential business operations during and after a disruption", "Umbrella plan"],
+          ["DRP", "Plan to recover IT infrastructure after a disaster", "IT-focused subset of BCP"],
+          ["COOP", "Continues essential government functions until IT infrastructure is restored", "Government equivalent of BCP"],
+          ["Business Resumption Plan", "Returns operations from the DR site back to normal facilities", "Post-recovery phase of BCP"],
+          ["BIA", "Business Impact Analysis — identifies critical functions, dependencies, MTD, RTO, and RPO", "Performed first — drives all BCP/DRP strategy"],
+          ["MTD", "Maximum Tolerable Downtime — longest outage before mission is compromised", "MTD ≥ RTO always"],
+          ["RTO", "Recovery Time Objective — target time to restore a system or service", "RTO ≥ RPO always"],
+          ["RPO", "Recovery Point Objective — maximum acceptable data loss measured in time", "Smallest value — drives backup frequency"],
+        ],
+      },
+      {
+        heading: "Threat Intelligence Types",
+        columns: ["Type", "Primary Audience", "Content"],
+        rows: [
+          ["Strategic", "Executives and board", "Geopolitical trends, adversary motivation and intent, long-term threat landscape"],
+          ["Operational", "SOC managers and incident commanders", "Adversary TTPs (Tactics, Techniques, Procedures) and specific campaign details"],
+          ["Tactical", "Security analysts and SOC engineers", "Specific IoCs — IP addresses, file hashes, domains for SIEM and firewall rules"],
+          ["Technical", "Forensics teams and security researchers", "Malware samples, exploit code, binary analysis, vulnerability technical details"],
+        ],
+      },
+      {
+        heading: "Threat Actor Types",
+        columns: ["Actor", "Motivation", "Sophistication"],
+        rows: [
+          ["Nation-state / APT", "Espionage, critical infrastructure sabotage, IP theft", "Very high — well-funded, persistent, custom tooling"],
+          ["Organised crime", "Financial gain — ransomware, fraud, data theft", "High — professional operations, Ransomware-as-a-Service model"],
+          ["Hacktivist", "Political or ideological agenda", "Medium — DDoS, web defacement, data leaks"],
+          ["Insider (malicious)", "Revenge, financial gain, competitor espionage", "High risk — bypasses perimeter controls with trusted access"],
+          ["Insider (accidental)", "No malicious intent — negligence, misconfiguration", "Unpredictable — addressed via training and technical controls"],
+          ["Script kiddie", "Notoriety, curiosity, opportunistic", "Low — uses pre-built tools and exploit kits; high volume"],
+          ["Competitor", "Corporate espionage — trade secrets, pricing, roadmaps", "Medium — targeted and stealthy"],
+        ],
+      },
+      {
+        heading: "Social Engineering Techniques",
+        columns: ["Technique", "Description", "Persuasion Principle(s)"],
+        rows: [
+          ["Phishing", "Mass email with malicious links or attachments targeting general users", "Urgency, Authority"],
+          ["Spear phishing", "Targeted phishing crafted for a specific individual or organisation", "Trust, Familiarity"],
+          ["Whaling", "Spear phishing targeting C-level executives for high-value actions", "Authority, Trust"],
+          ["Vishing", "Voice/phone call impersonation — IT support, bank, or government agency", "Authority, Urgency"],
+          ["Smishing", "SMS-based phishing with malicious links", "Urgency, Scarcity"],
+          ["Pretexting", "Fabricated scenario or persona used to build credibility and extract information", "Trust, Authority"],
+          ["BEC (Business Email Compromise)", "CEO fraud — impersonates executive to request urgent wire transfers", "Authority, Urgency"],
+          ["Watering hole", "Compromises a site frequently visited by the target group to deliver malware", "Trust (in the site)"],
+          ["Typosquatting", "Registers a fake domain using common misspellings of a legitimate domain", "Familiarity"],
+          ["Pharming", "DNS poisoning or host file manipulation to redirect users to fraudulent sites", "Trust (in DNS)"],
+        ],
+      },
+      {
+        heading: "Organisational Security Roles",
+        columns: ["Role", "Responsibility"],
+        rows: [
+          ["Senior Manager", "Ultimate responsibility for all security decisions and business outcomes; sets risk appetite"],
+          ["Security Professional", "Defines, implements, and manages security policy; functional adviser to management"],
+          ["Asset Owner", "Accountable for a specific system or asset and its associated security plan"],
+          ["Data Custodian", "IT staff implementing technical controls day-to-day on behalf of the owner"],
+          ["User", "Accesses data and systems within agreed authorisation boundaries"],
+          ["Auditor", "Independent reviewer verifying that controls are effective, properly implemented, and compliant"],
+        ],
+      },
+      {
+        heading: "Intellectual Property Types",
+        columns: ["Type", "What It Protects", "Duration"],
+        rows: [
+          ["Trademark", "Words, slogans, and logos identifying a company or its products", "Indefinite (renew every 10 years)"],
+          ["Utility Patent", "New, useful processes, machines, or compositions of matter", "20 years from filing date"],
+          ["Design Patent", "Ornamental appearance of a functional item", "15 years"],
+          ["Trade Secret", "Critical confidential business information not disclosed to competitors", "Indefinite while maintained as a secret"],
+          ["Copyright / DMCA", "Original literary, musical, dramatic, and artistic works", "Life of author + 70 years"],
+        ],
+      },
     ],
     flashcards: [
       { question: "What does the CIA Triad stand for?", answer: "Confidentiality (only authorised subjects access objects), Integrity (data not modified without authorisation), Availability (authorised requests served within a reasonable time)" },

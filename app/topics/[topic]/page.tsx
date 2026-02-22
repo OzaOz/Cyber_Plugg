@@ -4,6 +4,29 @@ import { useState } from "react";
 import { useParams, useRouter } from "next/navigation";
 import { topics } from "@/data/subjects";
 
+function renderCell(value: string): React.ReactNode {
+  if (!value.includes("`")) return value;
+  const parts = value.split(/`([^`]+)`/);
+  return (
+    <>
+      {parts.map((part, i) =>
+        i % 2 === 1 ? (
+          <code key={i} style={{
+            fontFamily: "'Geist Mono', 'Courier New', monospace",
+            backgroundColor: "#eef0f6",
+            color: "#3d4f15",
+            padding: "1px 5px",
+            borderRadius: "3px",
+            fontSize: "0.82em",
+          }}>
+            {part}
+          </code>
+        ) : part
+      )}
+    </>
+  );
+}
+
 function parseNote(note: string): { term: string; body: string } | null {
   const colonIdx = note.indexOf(": ");
   if (colonIdx !== -1 && colonIdx <= 65) {
@@ -29,6 +52,7 @@ export default function TopicPage() {
   }
 
   const card = topicData.flashcards[current];
+  const hasSections = topicData.sections && topicData.sections.length > 0;
 
   return (
     <main style={{ maxWidth: "960px", margin: "0 auto", padding: "60px 20px" }}>
@@ -54,7 +78,7 @@ export default function TopicPage() {
         {topicData.title}
       </h1>
 
-      {/* Study Notes — Reference Guide Table */}
+      {/* Study Notes */}
       <section style={{ marginBottom: "48px" }}>
         <div style={{
           backgroundColor: "#6b7c2d",
@@ -69,99 +93,178 @@ export default function TopicPage() {
           Study Notes
         </div>
 
-        {/* Column header row */}
-        <div style={{
-          display: "flex",
-          backgroundColor: "#f0f3e6",
-          borderLeft: "1px solid #ddd",
-          borderRight: "1px solid #ddd",
-          borderBottom: "1px solid #ccc",
-        }}>
+        {hasSections ? (
+          /* ── Rich sectioned table layout ── */
           <div style={{
-            width: "230px",
-            minWidth: "230px",
-            padding: "7px 16px",
-            fontSize: "0.75rem",
-            fontWeight: "700",
-            color: "#5a6b22",
-            letterSpacing: "0.04em",
-            textTransform: "uppercase",
-            borderRight: "1px solid #ddd",
+            border: "1px solid #ddd",
+            borderTop: "none",
+            borderRadius: "0 0 6px 6px",
+            overflow: "hidden",
           }}>
-            Concept
-          </div>
-          <div style={{
-            flex: 1,
-            padding: "7px 16px",
-            fontSize: "0.75rem",
-            fontWeight: "700",
-            color: "#5a6b22",
-            letterSpacing: "0.04em",
-            textTransform: "uppercase",
-          }}>
-            Description
-          </div>
-        </div>
-
-        {/* Note rows */}
-        <div style={{
-          border: "1px solid #ddd",
-          borderTop: "none",
-          borderRadius: "0 0 6px 6px",
-          overflow: "hidden",
-        }}>
-          {topicData.notes.map((note, i) => {
-            const parsed = parseNote(note);
-            const rowBg = i % 2 === 0 ? "#ffffff" : "#f8f9f3";
-            return (
+            {topicData.sections!.map((section, sIdx) => (
               <div
-                key={i}
+                key={sIdx}
                 style={{
-                  display: "flex",
-                  backgroundColor: rowBg,
-                  borderTop: i === 0 ? "none" : "1px solid #ebebeb",
+                  borderBottom: sIdx < topicData.sections!.length - 1 ? "1px solid #ccc" : "none",
                 }}
               >
-                {parsed ? (
-                  <>
-                    <div style={{
-                      width: "230px",
-                      minWidth: "230px",
-                      padding: "10px 16px",
+                {/* Section label */}
+                <div style={{
+                  padding: "8px 16px",
+                  backgroundColor: "#f0f3e6",
+                  fontSize: "0.71rem",
+                  fontWeight: "700",
+                  letterSpacing: "0.1em",
+                  textTransform: "uppercase",
+                  color: "#5a6b22",
+                  borderBottom: "1px solid #ccc",
+                }}>
+                  {section.heading}
+                </div>
+
+                {/* Column headers */}
+                <div style={{
+                  display: "grid",
+                  gridTemplateColumns: `repeat(${section.columns.length}, 1fr)`,
+                  backgroundColor: "#fafbf6",
+                  borderBottom: "1px solid #e0e0d8",
+                }}>
+                  {section.columns.map((col, cIdx) => (
+                    <div key={cIdx} style={{
+                      padding: "6px 14px",
+                      fontSize: "0.72rem",
                       fontWeight: "700",
-                      color: "#3d4f15",
-                      fontSize: "0.85rem",
-                      lineHeight: "1.45",
-                      borderRight: "1px solid #e0e0d8",
+                      color: "#6b7c2d",
+                      letterSpacing: "0.06em",
+                      textTransform: "uppercase",
+                      borderRight: cIdx < section.columns.length - 1 ? "1px solid #e0e0d8" : "none",
                     }}>
-                      {parsed.term}
+                      {col}
                     </div>
-                    <div style={{
-                      flex: 1,
-                      padding: "10px 16px",
-                      color: "#2a2a2a",
-                      fontSize: "0.875rem",
-                      lineHeight: "1.65",
-                    }}>
-                      {parsed.body}
-                    </div>
-                  </>
-                ) : (
-                  <div style={{
-                    flex: 1,
-                    padding: "10px 16px",
-                    color: "#2a2a2a",
-                    fontSize: "0.875rem",
-                    lineHeight: "1.65",
-                    fontStyle: "italic",
+                  ))}
+                </div>
+
+                {/* Data rows */}
+                {section.rows.map((row, rIdx) => (
+                  <div key={rIdx} style={{
+                    display: "grid",
+                    gridTemplateColumns: `repeat(${section.columns.length}, 1fr)`,
+                    backgroundColor: rIdx % 2 === 0 ? "#ffffff" : "#f8f9f3",
+                    borderTop: "1px solid #ebebeb",
                   }}>
-                    {note}
+                    {row.map((cell, cIdx) => (
+                      <div key={cIdx} style={{
+                        padding: "9px 14px",
+                        fontSize: "0.85rem",
+                        color: cIdx === 0 ? "#3d4f15" : "#2a2a2a",
+                        fontWeight: cIdx === 0 ? "600" : "400",
+                        lineHeight: "1.55",
+                        borderRight: cIdx < row.length - 1 ? "1px solid #ebebeb" : "none",
+                      }}>
+                        {renderCell(cell)}
+                      </div>
+                    ))}
                   </div>
-                )}
+                ))}
               </div>
-            );
-          })}
-        </div>
+            ))}
+          </div>
+        ) : (
+          /* ── Flat notes fallback (all other topics) ── */
+          <>
+            <div style={{
+              display: "flex",
+              backgroundColor: "#f0f3e6",
+              borderLeft: "1px solid #ddd",
+              borderRight: "1px solid #ddd",
+              borderBottom: "1px solid #ccc",
+            }}>
+              <div style={{
+                width: "230px",
+                minWidth: "230px",
+                padding: "7px 16px",
+                fontSize: "0.75rem",
+                fontWeight: "700",
+                color: "#5a6b22",
+                letterSpacing: "0.04em",
+                textTransform: "uppercase",
+                borderRight: "1px solid #ddd",
+              }}>
+                Concept
+              </div>
+              <div style={{
+                flex: 1,
+                padding: "7px 16px",
+                fontSize: "0.75rem",
+                fontWeight: "700",
+                color: "#5a6b22",
+                letterSpacing: "0.04em",
+                textTransform: "uppercase",
+              }}>
+                Description
+              </div>
+            </div>
+
+            <div style={{
+              border: "1px solid #ddd",
+              borderTop: "none",
+              borderRadius: "0 0 6px 6px",
+              overflow: "hidden",
+            }}>
+              {topicData.notes.map((note, i) => {
+                const parsed = parseNote(note);
+                const rowBg = i % 2 === 0 ? "#ffffff" : "#f8f9f3";
+                return (
+                  <div
+                    key={i}
+                    style={{
+                      display: "flex",
+                      backgroundColor: rowBg,
+                      borderTop: i === 0 ? "none" : "1px solid #ebebeb",
+                    }}
+                  >
+                    {parsed ? (
+                      <>
+                        <div style={{
+                          width: "230px",
+                          minWidth: "230px",
+                          padding: "10px 16px",
+                          fontWeight: "700",
+                          color: "#3d4f15",
+                          fontSize: "0.85rem",
+                          lineHeight: "1.45",
+                          borderRight: "1px solid #e0e0d8",
+                        }}>
+                          {parsed.term}
+                        </div>
+                        <div style={{
+                          flex: 1,
+                          padding: "10px 16px",
+                          color: "#2a2a2a",
+                          fontSize: "0.875rem",
+                          lineHeight: "1.65",
+                        }}>
+                          {parsed.body}
+                        </div>
+                      </>
+                    ) : (
+                      <div style={{
+                        flex: 1,
+                        padding: "10px 16px",
+                        color: "#2a2a2a",
+                        fontSize: "0.875rem",
+                        lineHeight: "1.65",
+                        fontStyle: "italic",
+                      }}>
+                        {note}
+                      </div>
+                    )}
+                  </div>
+                );
+              })}
+            </div>
+          </>
+        )}
       </section>
 
       {/* Flashcards */}
