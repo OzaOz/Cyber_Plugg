@@ -5,6 +5,7 @@ export type Flashcard = {
 
 export type Section = {
   heading: string;
+  subtitle?: string;
   columns: string[];
   rows: string[][];
 };
@@ -170,6 +171,7 @@ export const topics: Topic[] = [
       },
       {
         heading: "CISSP CAT Exam Format",
+        subtitle: "Computer Adaptive Testing",
         columns: ["Element", "Detail"],
         rows: [
           ["Format", "Computer Adaptive Testing (CAT) — difficulty adapts based on your answers"],
@@ -378,6 +380,7 @@ export const topics: Topic[] = [
       },
       {
         heading: "NIST SP 800-37 RMF — 7 Steps",
+        subtitle: "National Institute of Standards and Technology Risk Management Framework",
         columns: ["Step", "Name", "Action"],
         rows: [
           ["1", "Prepare", "Establish context, roles, risk strategy, and organisational priorities"],
@@ -424,6 +427,7 @@ export const topics: Topic[] = [
       },
       {
         heading: "GDPR Key Elements",
+        subtitle: "General Data Protection Regulation",
         columns: ["Element", "Detail"],
         rows: [
           ["Scope", "Applies to any organisation with EU customers regardless of where the organisation is located"],
@@ -437,6 +441,7 @@ export const topics: Topic[] = [
       },
       {
         heading: "OECD Privacy Principles (Fair Information Practices)",
+        subtitle: "Organisation for Economic Co-operation and Development",
         columns: ["Principle", "Requirement"],
         rows: [
           ["Collection Limitation", "Collect only the minimum data necessary for the stated purpose"],
@@ -682,6 +687,7 @@ export const topics: Topic[] = [
       },
       {
         heading: "DLP Types",
+        subtitle: "Data Loss Prevention",
         columns: ["Type", "Deployment Location", "What It Inspects"],
         rows: [
           ["Network-based DLP", "At the network edge / perimeter", "All outgoing traffic — blocks SSN, credit card numbers, and classified content in real time"],
@@ -709,6 +715,7 @@ export const topics: Topic[] = [
       },
       {
         heading: "EOL vs EOS",
+        subtitle: "End of Life vs End of Support",
         columns: ["Term", "Meaning", "Security Risk"],
         rows: [
           ["EOL — End-of-Life", "Vendor stops offering the product for sale", "Replacement parts and new support contracts become scarce"],
@@ -728,6 +735,7 @@ export const topics: Topic[] = [
       },
       {
         heading: "CASB Four Cornerstones",
+        subtitle: "Cloud Access Security Broker",
         columns: ["Cornerstone", "Description"],
         rows: [
           ["Visibility", "See all cloud app usage and data movement across the organisation"],
@@ -1254,6 +1262,7 @@ export const topics: Topic[] = [
       },
       {
         heading: "SDN & Network Virtualisation",
+        subtitle: "Software-Defined Networking",
         columns: ["Concept", "Description"],
         rows: [
           ["Control plane", "Decides how packets are forwarded — builds routing/forwarding tables, runs routing protocols; SDN centralises this on a software controller"],
@@ -1489,6 +1498,7 @@ export const topics: Topic[] = [
       },
       {
         heading: "AAA Services & Access Control Principles",
+        subtitle: "Authentication, Authorisation, and Accounting",
         columns: ["Service / Principle", "Definition", "Example"],
         rows: [
           ["Identification", "Subject claims an identity — no verification yet", "User enters a username"],
@@ -1695,6 +1705,7 @@ export const topics: Topic[] = [
       },
       {
         heading: "SCAP Components",
+        subtitle: "Security Content Automation Protocol",
         columns: ["Component", "Full Name", "Purpose"],
         rows: [
           ["CVE", "Common Vulnerabilities and Exposures", "Standardised naming system for publicly known vulnerabilities (format: CVE-YEAR-NUMBER)"],
@@ -1707,6 +1718,7 @@ export const topics: Topic[] = [
       },
       {
         heading: "SOC Audit Types & Report Levels",
+        subtitle: "System and Organisation Controls",
         columns: ["Type", "Scope", "Audience / Notes"],
         rows: [
           ["SOC 1", "Controls affecting financial reporting accuracy", "Used by financial auditors; governed by SSAE 18 / ISAE 3402"],
@@ -1879,6 +1891,7 @@ export const topics: Topic[] = [
       },
       {
         heading: "SIEM Core Functions",
+        subtitle: "Security Information and Event Management",
         columns: ["Function", "Description"],
         rows: [
           ["Log aggregation", "Collects logs from endpoints, network devices, applications, and cloud services"],
@@ -1928,6 +1941,7 @@ export const topics: Topic[] = [
       },
       {
         heading: "Continuous Monitoring (ICSM) Steps",
+        subtitle: "Information Security Continuous Monitoring",
         columns: ["Step", "Activity"],
         rows: [
           ["1 — Define", "Establish a continuous monitoring strategy aligned to mission/business requirements and risk tolerance"],
@@ -2049,6 +2063,7 @@ export const topics: Topic[] = [
     sections: [
       {
         heading: "SDLC Models",
+        subtitle: "Software Development Life Cycle",
         columns: ["Model", "Type", "Key Characteristic"],
         rows: [
           ["Waterfall", "Sequential", "Phases completed in strict order; no iteration; returning to earlier phases is expensive"],
@@ -2062,6 +2077,7 @@ export const topics: Topic[] = [
       },
       {
         heading: "CMM / CMMI Maturity Levels",
+        subtitle: "Capability Maturity Model / Capability Maturity Model Integration",
         columns: ["Level", "Name", "Description"],
         rows: [
           ["1", "Initial", "Ad hoc and chaotic — no formal repeatable processes; depends on individual heroics"],
@@ -2084,6 +2100,7 @@ export const topics: Topic[] = [
       },
       {
         heading: "Security Activities by SDLC Phase",
+        subtitle: "Software Development Life Cycle",
         columns: ["SDLC Phase", "Security Activities"],
         rows: [
           ["Requirements", "Define security requirements; threat modelling; identify applicable compliance obligations"],
@@ -2144,6 +2161,7 @@ export const topics: Topic[] = [
       },
       {
         heading: "SAMM Business Functions",
+        subtitle: "Software Assurance Maturity Model",
         columns: ["Business Function", "Key Security Practices"],
         rows: [
           ["Governance", "Strategy & metrics, policy & compliance, education & guidance — manage and direct the software security programme"],
@@ -2155,6 +2173,7 @@ export const topics: Topic[] = [
       },
       {
         heading: "OOP Key Terms",
+        subtitle: "Object-Oriented Programming",
         columns: ["Term", "Definition", "Security Relevance"],
         rows: [
           ["Message", "Communication or input sent to an object", "Untrusted messages must be validated — malformed messages can trigger vulnerabilities"],

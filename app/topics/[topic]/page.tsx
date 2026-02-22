@@ -99,16 +99,28 @@ export default function TopicPage() {
             {topicData.sections!.map((section, sIdx) => (
               <div key={sIdx}>
                 {/* Section heading — above the table, no box */}
-                <div style={{
-                  fontSize: "0.93rem",
-                  fontWeight: "700",
-                  letterSpacing: "0.08em",
-                  textTransform: "uppercase",
-                  color: "#5a6b22",
-                  marginBottom: "8px",
-                  paddingLeft: "2px",
-                }}>
-                  {section.heading}
+                <div style={{ marginBottom: "8px", paddingLeft: "2px" }}>
+                  <div style={{
+                    fontSize: "0.93rem",
+                    fontWeight: "700",
+                    letterSpacing: "0.08em",
+                    textTransform: "uppercase",
+                    color: "#5a6b22",
+                  }}>
+                    {section.heading}
+                  </div>
+                  {section.subtitle && (
+                    <div style={{
+                      fontSize: "0.78rem",
+                      color: "#888",
+                      marginTop: "2px",
+                      fontWeight: "400",
+                      letterSpacing: "0",
+                      textTransform: "none",
+                    }}>
+                      {section.subtitle}
+                    </div>
+                  )}
                 </div>
 
                 {/* Table card */}
