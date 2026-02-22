@@ -100,9 +100,9 @@ export default function TopicPage() {
               <div key={sIdx}>
                 {/* Section heading — above the table, no box */}
                 <div style={{
-                  fontSize: "0.8rem",
+                  fontSize: "0.93rem",
                   fontWeight: "700",
-                  letterSpacing: "0.1em",
+                  letterSpacing: "0.08em",
                   textTransform: "uppercase",
                   color: "#5a6b22",
                   marginBottom: "8px",
