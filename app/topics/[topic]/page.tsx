@@ -13,8 +13,8 @@ function renderCell(value: string): React.ReactNode {
         i % 2 === 1 ? (
           <code key={i} style={{
             fontFamily: "'Geist Mono', 'Courier New', monospace",
-            backgroundColor: "#eef0f6",
-            color: "#3d4f15",
+            backgroundColor: "#e5f3ee",
+            color: "#0f4d38",
             padding: "1px 5px",
             borderRadius: "3px",
             fontSize: "0.82em",
@@ -63,7 +63,7 @@ export default function TopicPage() {
         style={{
           background: "none",
           border: "none",
-          color: "#6b7c2d",
+          color: "#1a7a5c",
           cursor: "pointer",
           fontSize: "0.9rem",
           marginBottom: "28px",
@@ -74,14 +74,14 @@ export default function TopicPage() {
       </button>
 
       {/* Title */}
-      <h1 style={{ fontSize: "1.7rem", fontWeight: "700", marginBottom: "36px", color: "#6b7c2d" }}>
+      <h1 style={{ fontSize: "1.7rem", fontWeight: "700", marginBottom: "36px", color: "#1a7a5c" }}>
         {topicData.title}
       </h1>
 
       {/* Study Notes */}
       <section style={{ marginBottom: "48px" }}>
         <div style={{
-          backgroundColor: "#6b7c2d",
+          backgroundColor: "#1a7a5c",
           color: "white",
           padding: "9px 16px",
           borderRadius: "6px 6px 0 0",
@@ -105,7 +105,7 @@ export default function TopicPage() {
                     fontWeight: "700",
                     letterSpacing: "0.08em",
                     textTransform: "uppercase",
-                    color: "#5a6b22",
+                    color: "#156349",
                   }}>
                     {section.heading}
                   </div>
@@ -133,7 +133,7 @@ export default function TopicPage() {
                   <div style={{
                     display: "grid",
                     gridTemplateColumns: `repeat(${section.columns.length}, 1fr)`,
-                    backgroundColor: "#fafbf6",
+                    backgroundColor: "#f4fbf8",
                     borderBottom: "1px solid #e0e0d8",
                   }}>
                     {section.columns.map((col, cIdx) => (
@@ -141,7 +141,7 @@ export default function TopicPage() {
                         padding: "6px 14px",
                         fontSize: "0.72rem",
                         fontWeight: "700",
-                        color: "#6b7c2d",
+                        color: "#1a7a5c",
                         letterSpacing: "0.06em",
                         textTransform: "uppercase",
                         borderRight: cIdx < section.columns.length - 1 ? "1px solid #e0e0d8" : "none",
@@ -156,14 +156,14 @@ export default function TopicPage() {
                     <div key={rIdx} style={{
                       display: "grid",
                       gridTemplateColumns: `repeat(${section.columns.length}, 1fr)`,
-                      backgroundColor: rIdx % 2 === 0 ? "#ffffff" : "#f8f9f3",
+                      backgroundColor: rIdx % 2 === 0 ? "#ffffff" : "#f1f9f6",
                       borderTop: "1px solid #ebebeb",
                     }}>
                       {row.map((cell, cIdx) => (
                         <div key={cIdx} style={{
                           padding: "9px 14px",
                           fontSize: "0.85rem",
-                          color: cIdx === 0 ? "#3d4f15" : "#2a2a2a",
+                          color: cIdx === 0 ? "#0f4d38" : "#2a2a2a",
                           fontWeight: cIdx === 0 ? "600" : "400",
                           lineHeight: "1.55",
                           borderRight: cIdx < row.length - 1 ? "1px solid #ebebeb" : "none",
@@ -182,7 +182,7 @@ export default function TopicPage() {
           <>
             <div style={{
               display: "flex",
-              backgroundColor: "#f0f3e6",
+              backgroundColor: "#e8f5f0",
               borderLeft: "1px solid #ddd",
               borderRight: "1px solid #ddd",
               borderBottom: "1px solid #ccc",
@@ -193,7 +193,7 @@ export default function TopicPage() {
                 padding: "7px 16px",
                 fontSize: "0.75rem",
                 fontWeight: "700",
-                color: "#5a6b22",
+                color: "#156349",
                 letterSpacing: "0.04em",
                 textTransform: "uppercase",
                 borderRight: "1px solid #ddd",
@@ -205,7 +205,7 @@ export default function TopicPage() {
                 padding: "7px 16px",
                 fontSize: "0.75rem",
                 fontWeight: "700",
-                color: "#5a6b22",
+                color: "#156349",
                 letterSpacing: "0.04em",
                 textTransform: "uppercase",
               }}>
@@ -221,7 +221,7 @@ export default function TopicPage() {
             }}>
               {topicData.notes.map((note, i) => {
                 const parsed = parseNote(note);
-                const rowBg = i % 2 === 0 ? "#ffffff" : "#f8f9f3";
+                const rowBg = i % 2 === 0 ? "#ffffff" : "#f1f9f6";
                 return (
                   <div
                     key={i}
@@ -238,7 +238,7 @@ export default function TopicPage() {
                           minWidth: "230px",
                           padding: "10px 16px",
                           fontWeight: "700",
-                          color: "#3d4f15",
+                          color: "#0f4d38",
                           fontSize: "0.85rem",
                           lineHeight: "1.45",
                           borderRight: "1px solid #e0e0d8",
@@ -279,7 +279,7 @@ export default function TopicPage() {
       {hasSections && topicData.notes.length > 0 && (
         <section style={{ marginBottom: "48px" }}>
           <div style={{
-            backgroundColor: "#6b7c2d",
+            backgroundColor: "#1a7a5c",
             color: "white",
             padding: "9px 16px",
             borderRadius: "6px 6px 0 0",
@@ -293,7 +293,7 @@ export default function TopicPage() {
 
           <div style={{
             display: "flex",
-            backgroundColor: "#f0f3e6",
+            backgroundColor: "#e8f5f0",
             borderLeft: "1px solid #ddd",
             borderRight: "1px solid #ddd",
             borderBottom: "1px solid #ccc",
@@ -304,7 +304,7 @@ export default function TopicPage() {
               padding: "7px 16px",
               fontSize: "0.75rem",
               fontWeight: "700",
-              color: "#5a6b22",
+              color: "#156349",
               letterSpacing: "0.04em",
               textTransform: "uppercase",
               borderRight: "1px solid #ddd",
@@ -316,7 +316,7 @@ export default function TopicPage() {
               padding: "7px 16px",
               fontSize: "0.75rem",
               fontWeight: "700",
-              color: "#5a6b22",
+              color: "#156349",
               letterSpacing: "0.04em",
               textTransform: "uppercase",
             }}>
@@ -332,7 +332,7 @@ export default function TopicPage() {
           }}>
             {topicData.notes.map((note, i) => {
               const parsed = parseNote(note);
-              const rowBg = i % 2 === 0 ? "#ffffff" : "#f8f9f3";
+              const rowBg = i % 2 === 0 ? "#ffffff" : "#f1f9f6";
               return (
                 <div
                   key={i}
@@ -349,7 +349,7 @@ export default function TopicPage() {
                         minWidth: "230px",
                         padding: "10px 16px",
                         fontWeight: "700",
-                        color: "#3d4f15",
+                        color: "#0f4d38",
                         fontSize: "0.85rem",
                         lineHeight: "1.45",
                         borderRight: "1px solid #e0e0d8",
@@ -388,7 +388,7 @@ export default function TopicPage() {
       {/* Flashcards */}
       <section>
         <div style={{
-          backgroundColor: "#6b7c2d",
+          backgroundColor: "#1a7a5c",
           color: "white",
           padding: "9px 16px",
           borderRadius: "6px 6px 0 0",
@@ -427,14 +427,14 @@ export default function TopicPage() {
               textAlign: "center",
               transition: "background-color 0.15s",
             }}
-            onMouseEnter={e => (e.currentTarget.style.backgroundColor = "#f8f9f3")}
+            onMouseEnter={e => (e.currentTarget.style.backgroundColor = "#f1f9f6")}
             onMouseLeave={e => (e.currentTarget.style.backgroundColor = "#ffffff")}
           >
             {flipped === current ? (
               <>
                 <p style={{
                   fontSize: "0.7rem",
-                  color: "#6b7c2d",
+                  color: "#1a7a5c",
                   marginBottom: "14px",
                   textTransform: "uppercase",
                   letterSpacing: "0.08em",
@@ -469,7 +469,7 @@ export default function TopicPage() {
           <div style={{
             display: "flex",
             borderTop: "1px solid #e0e0d8",
-            backgroundColor: "#f8f9f3",
+            backgroundColor: "#f1f9f6",
           }}>
             <button
               onClick={() => { setCurrent((prev) => Math.max(prev - 1, 0)); setFlipped(null); }}
@@ -481,7 +481,7 @@ export default function TopicPage() {
                 borderRight: "1px solid #e0e0d8",
                 backgroundColor: "transparent",
                 cursor: current === 0 ? "not-allowed" : "pointer",
-                color: current === 0 ? "#ccc" : "#6b7c2d",
+                color: current === 0 ? "#ccc" : "#1a7a5c",
                 fontSize: "0.88rem",
                 fontWeight: "600",
               }}
@@ -497,7 +497,7 @@ export default function TopicPage() {
                 border: "none",
                 backgroundColor: "transparent",
                 cursor: current === topicData.flashcards.length - 1 ? "not-allowed" : "pointer",
-                color: current === topicData.flashcards.length - 1 ? "#ccc" : "#6b7c2d",
+                color: current === topicData.flashcards.length - 1 ? "#ccc" : "#1a7a5c",
                 fontSize: "0.88rem",
                 fontWeight: "600",
               }}

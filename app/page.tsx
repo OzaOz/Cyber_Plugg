@@ -66,7 +66,7 @@ export default function Home() {
 
   return (
     <main style={{ maxWidth: "900px", margin: "0 auto", padding: "60px 20px" }}>
-      <h1 style={{ fontSize: "2rem", fontWeight: "700", marginBottom: "10px", color: "#6b7c2d" }}>
+      <h1 style={{ fontSize: "2rem", fontWeight: "700", marginBottom: "10px", color: "#1a7a5c" }}>
         Cyber Study
       </h1>
       <p style={{ color: "#555", marginBottom: "28px" }}>
@@ -84,10 +84,10 @@ export default function Home() {
               onClick={() => setTab(t)}
               style={{
                 padding: "8px 20px",
-                border: `1px solid ${active ? "#6b7c2d" : "#ddd"}`,
+                border: `1px solid ${active ? "#1a7a5c" : "#ddd"}`,
                 borderRadius: "6px",
-                backgroundColor: active ? "#6b7c2d" : "#ffffff",
-                color: active ? "#ffffff" : "#6b7c2d",
+                backgroundColor: active ? "#1a7a5c" : "#ffffff",
+                color: active ? "#ffffff" : "#1a7a5c",
                 fontWeight: "600",
                 fontSize: "0.85rem",
                 cursor: "pointer",
@@ -110,7 +110,7 @@ export default function Home() {
         }}>
           {/* Header */}
           <div style={{
-            backgroundColor: "#6b7c2d",
+            backgroundColor: "#1a7a5c",
             color: "white",
             padding: "12px 20px",
             display: "flex",
@@ -146,11 +146,11 @@ export default function Home() {
           {/* Domain label */}
           <div style={{
             padding: "7px 20px",
-            backgroundColor: "#f0f3e6",
+            backgroundColor: "#e8f5f0",
             borderBottom: "1px solid #e0e0d8",
             fontSize: "0.72rem",
             fontWeight: "700",
-            color: "#5a6b22",
+            color: "#156349",
             letterSpacing: "0.08em",
             textTransform: "uppercase",
           }}>
@@ -172,14 +172,14 @@ export default function Home() {
               backgroundColor: "#ffffff",
               transition: "background-color 0.15s",
             }}
-            onMouseEnter={(e) => (e.currentTarget.style.backgroundColor = "#f8f9f3")}
+            onMouseEnter={(e) => (e.currentTarget.style.backgroundColor = "#f1f9f6")}
             onMouseLeave={(e) => (e.currentTarget.style.backgroundColor = "#ffffff")}
           >
             {quizFlipped ? (
               <>
                 <p style={{
                   fontSize: "0.7rem",
-                  color: "#6b7c2d",
+                  color: "#1a7a5c",
                   marginBottom: "14px",
                   textTransform: "uppercase",
                   letterSpacing: "0.08em",
@@ -214,7 +214,7 @@ export default function Home() {
           <div style={{
             display: "flex",
             borderTop: "1px solid #e0e0d8",
-            backgroundColor: "#f8f9f3",
+            backgroundColor: "#f1f9f6",
           }}>
             <button
               onClick={handlePrev}
@@ -226,7 +226,7 @@ export default function Home() {
                 borderRight: "1px solid #e0e0d8",
                 backgroundColor: "transparent",
                 cursor: quizIdx === 0 ? "not-allowed" : "pointer",
-                color: quizIdx === 0 ? "#ccc" : "#6b7c2d",
+                color: quizIdx === 0 ? "#ccc" : "#1a7a5c",
                 fontSize: "0.88rem",
                 fontWeight: "600",
               }}
@@ -242,7 +242,7 @@ export default function Home() {
                 border: "none",
                 backgroundColor: "transparent",
                 cursor: quizIdx === cards.length - 1 ? "not-allowed" : "pointer",
-                color: quizIdx === cards.length - 1 ? "#ccc" : "#6b7c2d",
+                color: quizIdx === cards.length - 1 ? "#ccc" : "#1a7a5c",
                 fontSize: "0.88rem",
                 fontWeight: "600",
               }}
@@ -256,7 +256,7 @@ export default function Home() {
         <div
           style={{
             backgroundColor: "#ffffff",
-            border: `1px solid ${cissOpen || hoveredId === "cissp-group" ? "#6b7c2d" : "#ddd"}`,
+            border: `1px solid ${cissOpen || hoveredId === "cissp-group" ? "#1a7a5c" : "#ddd"}`,
             borderRadius: "12px",
             padding: "24px",
             cursor: "pointer",
@@ -269,7 +269,7 @@ export default function Home() {
           {/* Header row */}
           <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center" }}>
             <div>
-              <h2 style={{ fontSize: "1.1rem", fontWeight: "600", marginBottom: "4px", color: "#6b7c2d" }}>
+              <h2 style={{ fontSize: "1.1rem", fontWeight: "600", marginBottom: "4px", color: "#1a7a5c" }}>
                 CISSP Exam Preparation
               </h2>
               <p style={{ fontSize: "0.85rem", color: "#777" }}>
@@ -280,7 +280,7 @@ export default function Home() {
             </div>
             <span style={{
               fontSize: "1.1rem",
-              color: "#6b7c2d",
+              color: "#1a7a5c",
               display: "inline-block",
               transition: "transform 0.2s",
               transform: cissOpen ? "rotate(180deg)" : "rotate(0deg)",
@@ -308,8 +308,8 @@ export default function Home() {
                 <Link key={topic.id} href={`/topics/${topic.id}`} style={{ textDecoration: "none" }}>
                   <div
                     style={{
-                      backgroundColor: "#f8f9f3",
-                      border: `1px solid ${hoveredId === topic.id ? "#6b7c2d" : "#e0e0d8"}`,
+                      backgroundColor: "#f1f9f6",
+                      border: `1px solid ${hoveredId === topic.id ? "#1a7a5c" : "#e0e0d8"}`,
                       borderRadius: "10px",
                       padding: "16px 18px",
                       cursor: "pointer",
@@ -319,7 +319,7 @@ export default function Home() {
                     onMouseEnter={() => setHoveredId(topic.id)}
                     onMouseLeave={() => setHoveredId(null)}
                   >
-                    <h3 style={{ fontSize: "0.95rem", fontWeight: "600", marginBottom: "6px", color: "#6b7c2d" }}>
+                    <h3 style={{ fontSize: "0.95rem", fontWeight: "600", marginBottom: "6px", color: "#1a7a5c" }}>
                       {topic.title}
                     </h3>
                     <p style={{ fontSize: "0.8rem", color: "#777" }}>
@@ -351,7 +351,7 @@ export default function Home() {
               href="https://github.com/jefferywmoore/CISSP-Study-Resources/tree/main"
               target="_blank"
               rel="noopener noreferrer"
-              style={{ color: "#6b7c2d", textDecoration: "none" }}
+              style={{ color: "#1a7a5c", textDecoration: "none" }}
               onMouseEnter={(e) => (e.currentTarget.style.textDecoration = "underline")}
               onMouseLeave={(e) => (e.currentTarget.style.textDecoration = "none")}
             >
@@ -362,7 +362,7 @@ export default function Home() {
               href="https://www.youtube.com/watch?v=_nyZhYnCNLA&t=2s"
               target="_blank"
               rel="noopener noreferrer"
-              style={{ color: "#6b7c2d", textDecoration: "none" }}
+              style={{ color: "#1a7a5c", textDecoration: "none" }}
               onMouseEnter={(e) => (e.currentTarget.style.textDecoration = "underline")}
               onMouseLeave={(e) => (e.currentTarget.style.textDecoration = "none")}
             >
