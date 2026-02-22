@@ -27,6 +27,15 @@ function renderCell(value: string): React.ReactNode {
   );
 }
 
+function shuffleArray<T>(arr: T[]): T[] {
+  const a = [...arr];
+  for (let i = a.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [a[i], a[j]] = [a[j], a[i]];
+  }
+  return a;
+}
+
 function parseNote(note: string): { term: string; body: string } | null {
   const colonIdx = note.indexOf(": ");
   if (colonIdx !== -1 && colonIdx <= 65) {
@@ -42,6 +51,7 @@ export default function TopicPage() {
 
   const [flipped, setFlipped] = useState<number | null>(null);
   const [current, setCurrent] = useState(0);
+  const [cards] = useState(() => shuffleArray(topicData?.flashcards ?? []));
 
   if (!topicData) {
     return (
@@ -51,7 +61,7 @@ export default function TopicPage() {
     );
   }
 
-  const card = topicData.flashcards[current];
+  const card = cards[current];
   const hasSections = topicData.sections && topicData.sections.length > 0;
 
   return (
@@ -402,7 +412,7 @@ export default function TopicPage() {
         }}>
           <span>Flashcards</span>
           <span style={{ fontWeight: "400", opacity: 0.85, fontSize: "0.8rem" }}>
-            {current + 1} / {topicData.flashcards.length}
+            {current + 1} / {cards.length}
           </span>
         </div>
 
@@ -489,15 +499,15 @@ export default function TopicPage() {
               ← Previous
             </button>
             <button
-              onClick={() => { setCurrent((prev) => Math.min(prev + 1, topicData.flashcards.length - 1)); setFlipped(null); }}
-              disabled={current === topicData.flashcards.length - 1}
+              onClick={() => { setCurrent((prev) => Math.min(prev + 1, cards.length - 1)); setFlipped(null); }}
+              disabled={current === cards.length - 1}
               style={{
                 flex: 1,
                 padding: "12px",
                 border: "none",
                 backgroundColor: "transparent",
-                cursor: current === topicData.flashcards.length - 1 ? "not-allowed" : "pointer",
-                color: current === topicData.flashcards.length - 1 ? "#ccc" : "#1a7a5c",
+                cursor: current === cards.length - 1 ? "not-allowed" : "pointer",
+                color: current === cards.length - 1 ? "#ccc" : "#1a7a5c",
                 fontSize: "0.88rem",
                 fontWeight: "600",
               }}

@@ -42,7 +42,7 @@ export default function Home() {
   const [hoveredId, setHoveredId] = useState<string | null>(null);
 
   // Quiz tab state
-  const [cards, setCards] = useState(baseFlashcards);
+  const [cards, setCards] = useState(() => shuffleArray(baseFlashcards));
   const [quizIdx, setQuizIdx] = useState(0);
   const [quizFlipped, setQuizFlipped] = useState(false);
 
