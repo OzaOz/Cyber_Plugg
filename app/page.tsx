@@ -16,6 +16,7 @@ const cissTopics = [
 ];
 
 export default function Home() {
+  const [tab, setTab] = useState<"reading" | "quiz">("reading");
   const [cissOpen, setCissOpen] = useState(false);
   const [hoveredId, setHoveredId] = useState<string | null>(null);
 
@@ -24,10 +25,54 @@ export default function Home() {
       <h1 style={{ fontSize: "2rem", fontWeight: "700", marginBottom: "10px", color: "#6b7c2d" }}>
         Cyber Study
       </h1>
-      <p style={{ color: "#555", marginBottom: "40px" }}>
+      <p style={{ color: "#555", marginBottom: "28px" }}>
         Select a topic to study
       </p>
 
+      {/* Tabs */}
+      <div style={{ display: "flex", gap: "4px", marginBottom: "24px" }}>
+        {(["reading", "quiz"] as const).map((t) => {
+          const labels = { reading: "Reading Material", quiz: "Quizzes" };
+          const active = tab === t;
+          return (
+            <button
+              key={t}
+              onClick={() => setTab(t)}
+              style={{
+                padding: "8px 20px",
+                border: `1px solid ${active ? "#6b7c2d" : "#ddd"}`,
+                borderRadius: "6px",
+                backgroundColor: active ? "#6b7c2d" : "#ffffff",
+                color: active ? "#ffffff" : "#6b7c2d",
+                fontWeight: "600",
+                fontSize: "0.85rem",
+                cursor: "pointer",
+                transition: "all 0.15s",
+              }}
+            >
+              {labels[t]}
+            </button>
+          );
+        })}
+      </div>
+
+      {tab === "quiz" ? (
+        <div style={{
+          backgroundColor: "#ffffff",
+          border: "1px solid #ddd",
+          borderRadius: "12px",
+          padding: "48px 32px",
+          textAlign: "center",
+          color: "#aaa",
+        }}>
+          <p style={{ fontSize: "1rem", fontWeight: "600", color: "#6b7c2d", marginBottom: "8px" }}>
+            Quizzes coming soon
+          </p>
+          <p style={{ fontSize: "0.85rem" }}>
+            Quiz mode will let you test your knowledge across all 8 CISSP domains.
+          </p>
+        </div>
+      ) : (
       <div
         style={{
           backgroundColor: "#ffffff",
@@ -145,6 +190,7 @@ export default function Home() {
           </a>
         </div>
       </div>
+      )}
     </main>
   );
 }
