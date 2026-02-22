@@ -94,18 +94,15 @@ export default function TopicPage() {
         </div>
 
         {hasSections ? (
-          /* ── Rich sectioned table layout ── */
-          <div style={{
-            border: "1px solid #ddd",
-            borderTop: "none",
-            borderRadius: "0 0 6px 6px",
-            overflow: "hidden",
-          }}>
+          /* ── Rich sectioned table layout — each section is its own card ── */
+          <div style={{ display: "flex", flexDirection: "column", gap: "12px", borderTop: "none" }}>
             {topicData.sections!.map((section, sIdx) => (
               <div
                 key={sIdx}
                 style={{
-                  borderBottom: sIdx < topicData.sections!.length - 1 ? "1px solid #ccc" : "none",
+                  border: "1px solid #ddd",
+                  borderRadius: "6px",
+                  overflow: "hidden",
                 }}
               >
                 {/* Section label */}
